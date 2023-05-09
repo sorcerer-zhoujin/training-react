@@ -4,6 +4,7 @@ import { PlayerItem } from "../types/player-item";
 
 const PlayerItems = () => {
   const [playerItems, setPlayerItems] = useState<PlayerItem[]>([]);
+  const [inputValue, setInputValue] = useState('');
 
   const fetchData = async () => {
     const playerId = localStorage.getItem("playerId");
@@ -29,13 +30,12 @@ const PlayerItems = () => {
     }
   };
 
-  const useItem = async (id:number) => {
+  const useItem = async (id:number, count: number) => {
     const playerId = localStorage.getItem("playerId");
     try {
-      const element = document.getElementById("inputCount" + id)! as HTMLInputElement;
       const body = {
         itemId: id,
-        count: parseInt(element.value)
+        count: count
       }
       console.log(body);
 
@@ -44,15 +44,18 @@ const PlayerItems = () => {
       const data = await res.data;
       console.log(data);
       return data;
-      //TODO 取得したデータをstateに保存
     } catch (e) {
       console.log(e);
       return null;
     }
   }
 
-  const HandleClickUseItem = (id: number) => {
-    useItem(id);
+  const HandleClickUseItem = (id: number, count: number) => {
+    useItem(id, count);
+  };
+
+  const HandleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
   };
 
   return (
@@ -72,8 +75,8 @@ const PlayerItems = () => {
             <tr key={d.itemId}>
               <td>{d.itemId}</td>
               <td>{d.count}</td>
-              <td><input type="number" id={"inputCount" + d.itemId}></input></td>
-              <td><button onClick={() => HandleClickUseItem(d.itemId)} id={"useButton" + d.itemId} data-item_id={d.itemId}>Use Item</button></td>
+              <td><input type="number" value={inputValue} onChange={HandleInputChange} id={"inputValue" + d.itemId} data-item_id={d.itemId}></input></td>
+              <td><button onClick={() => HandleClickUseItem(d.itemId, parseInt(inputValue))} id={"useButton" + d.itemId} data-item_id={d.itemId}>Use Item</button></td>
             </tr>
           ))}
         </tbody>
