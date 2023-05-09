@@ -11,7 +11,7 @@ const PlayerItems = () => {
     try {
       //自分のapiサーバーにリクエストを送る
       const res = await axios.get(`http://localhost:3000/players/${playerId}/getAllItems`);
-      const data = await res.data;
+      const data = res.data;
       console.log(data);
       return data;
       //TODO 取得したデータをstateに保存
