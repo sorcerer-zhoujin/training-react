@@ -79,7 +79,7 @@ const PlayerItems = () => {
               <td>{d.itemId}</td>
               <td>{d.count}</td>
               <td><input type="number" value={inputValue[d.itemId]} onChange={(e) => HandleInputChange(d.itemId, e)}></input></td>
-              <td><button onClick={() => HandleClickUseItem(d.itemId, parseInt(inputValue[d.itemId]))} id={"useButton" + d.itemId} data-item_id={d.itemId}>Use Item</button></td>
+              <td><button onClick={() => HandleClickUseItem(d.itemId, parseInt(inputValue[d.itemId]))}>Use Item</button></td>
             </tr>
           ))}
         </tbody>
