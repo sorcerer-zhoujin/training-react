@@ -4,7 +4,7 @@ import { PlayerItem } from "../types/player-item";
 
 const PlayerItems = () => {
   const [playerItems, setPlayerItems] = useState<PlayerItem[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string[]>([]);
 
   const fetchData = async () => {
     const playerId = localStorage.getItem("playerId");
@@ -54,8 +54,11 @@ const PlayerItems = () => {
     useItem(id, count);
   };
 
-  const HandleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const HandleInputChange = (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = [...inputValue];
+    newValue[id] = event.target.value;
+    setInputValue(newValue);
+    console.log(inputValue);
   };
 
   return (
@@ -75,8 +78,8 @@ const PlayerItems = () => {
             <tr key={d.itemId}>
               <td>{d.itemId}</td>
               <td>{d.count}</td>
-              <td><input type="number" value={inputValue} onChange={HandleInputChange}></input></td>
-              <td><button onClick={() => HandleClickUseItem(d.itemId, parseInt(inputValue))} id={"useButton" + d.itemId} data-item_id={d.itemId}>Use Item</button></td>
+              <td><input type="number" value={inputValue[d.itemId]} onChange={(e) => HandleInputChange(d.itemId, e)}></input></td>
+              <td><button onClick={() => HandleClickUseItem(d.itemId, parseInt(inputValue[d.itemId]))} id={"useButton" + d.itemId} data-item_id={d.itemId}>Use Item</button></td>
             </tr>
           ))}
         </tbody>
