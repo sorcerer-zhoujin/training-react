@@ -27,6 +27,8 @@ const Home = () => {
       <Link to="player-status">player status</Link>
       <br />
       <Link to="player-items">player items</Link>
+      <br />
+      <Link to="gacha">gacha</Link>
 
       <Outlet />
     </>
